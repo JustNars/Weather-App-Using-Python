@@ -102,7 +102,6 @@ class MainApp(CTk):
                 self.min_temp.configure(text=f"Min Temp: \n{weather_data["main"]["temp_min"]}°C")
 
                 weather = weather_data["weather"][0]["main"]
-                print(weather)
 
                 # learned this trick from a friend. can't stop using it xd
                 if weather in ("Clear", "Clouds", "Rain", "Drizzle", "Thunderstorm", "Snow"):
