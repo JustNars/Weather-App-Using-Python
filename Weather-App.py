@@ -5,13 +5,13 @@ import requests
 class MainApp(CTk):
     def __init__(self):
         super().__init__()
-
         set_appearance_mode("dark")
 
         # set up the main window
         self.geometry("400x660")
         self.title("Nar's Weather App")
         self.resizable(False, False)
+        self.iconbitmap("weather-app-images/faviconW.ico")
 
         # main frame
         self.main_frame = CTkFrame(self, corner_radius=20)
@@ -47,7 +47,6 @@ class MainApp(CTk):
         # Frames
         self.frame_display_1 = CTkFrame(self.main_frame, height=190, width=150, corner_radius=20, fg_color="#363836")
         self.frame_display_1.place(x=20, y=415)
-
         self.frame_display_2 = CTkFrame(self.main_frame, height=190, width=150, corner_radius=20, fg_color="#363836")
         self.frame_display_2.place(x=190, y=415)
 
@@ -60,6 +59,7 @@ class MainApp(CTk):
         self.weather_image = CTkImage(Image.open("weather-app-images/sun.png"), size=(150, 150))
         self.humity_image = CTkImage(Image.open("weather-app-images/haze.png"), size=(30, 30))
         self.wind_image = CTkImage(Image.open("weather-app-images/wind.png"), size=(30, 30))
+        self.feels_like_image = CTkImage(Image.open("weather-app-images/user.png"), size=(30, 30))
         
         # Labels
         self.big_title = CTkLabel(self.main_frame, text="", font=("Cascadia Code", 35))
@@ -80,6 +80,10 @@ class MainApp(CTk):
         self.wind_label.place(x=8,y=20)
         self.humity_label = CTkLabel(self.frame_display_1, text=" Humidity", font=("Cascadia Code", 20), image=self.humity_image, compound=LEFT)
         self.humity_label.place(x=8, y=95)
+        self.feels_like_label = CTkLabel(self.frame_display_2, text=" Feels Like", font=("Cascadia Code", 16), image=self.feels_like_image, compound=LEFT)
+        self.feels_like_label.place(x=8, y=20)
+        self.speed_label = CTkLabel(self.frame_display_2, text=" Speed:", font=("Cascadia Code", 25))
+        self.speed_label.place(x=8, y=95)
 
     def get_weather(self, event):
         base_url = "http://api.openweathermap.org/data/2.5/weather"
@@ -97,6 +101,8 @@ class MainApp(CTk):
                 self.temp_label.configure(text=f"{weather_data["main"]["temp"]}°C")
                 self.wind_label.configure(text=f" Wind\n{weather_data["wind"]["speed"]}km/h")
                 self.humity_label.configure(text=f" Humidity\n{weather_data["main"]["humidity"]}%")
+                self.feels_like_label.configure(text=f" Feels Like\n{weather_data["main"]["feels_like"]}°C")
+                self.speed_label.configure(text=f" Speed:\n{weather_data["wind"]["speed"]}")
                 self.max_temp.configure(text=f"Max Temp: \n{weather_data["main"]["temp_max"]}°C")
                 self.min_temp.configure(text=f"Min Temp: \n{weather_data["main"]["temp_min"]}°C")
 
@@ -115,7 +121,7 @@ class MainApp(CTk):
                 self.show_main_app()
                 self.big_title.configure(text="Error: City Not Found", font=("Cascadia Code", 20))
         except Exception as e:
-             self.big_title.configure(text="Error: City Not Found", font=("Cascadia Code", 15))
+             self.big_title.configure(text=f"Error: {e}", font=("Cascadia Code", 15))
 
     def theme(self, value):
         try:
