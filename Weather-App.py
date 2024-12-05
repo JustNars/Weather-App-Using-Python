@@ -12,7 +12,6 @@ class MainApp(CTk):
         self.geometry("400x660")
         self.title("Nar's Weather App")
         self.resizable(False, False)
-        self.iconbitmap("")
 
         # main frame
         self.main_frame = CTkFrame(self, corner_radius=20)
