@@ -87,7 +87,7 @@ class MainApp(CTk):
 
     def get_weather(self, event):
         base_url = "http://api.openweathermap.org/data/2.5/weather"
-        params = { "q": self.entry_box.get(), "appid": "17d678349374714a0cb8702690a57526", "units": "metric"}
+        params = { "q": self.entry_box.get(), "appid": "use_your_own_api_key_dummy_:)", "units": "metric"}
         try:
             response = requests.get(base_url, params=params)
 
